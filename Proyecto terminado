@@ -1,0 +1,158 @@
+using System;
+					
+public class Program
+{ 
+	static string[,] agenda; 
+  static int Contactos = 0;
+  static int Contador = 0;
+	public static void Main()
+	{
+		
+		        char menu= 's';
+            int op = 0;
+		        string linea= "";
+
+            while (menu!= 'n')
+            {
+               
+                Console.WriteLine("-----------------");
+                Console.WriteLine("1.Crear contactos");
+                Console.WriteLine("2.Buscar contactos");
+                Console.WriteLine("3.Modificar contactos");
+                Console.WriteLine("4.Eliminar contactos");
+                Console.WriteLine("5.Mostar contactos");
+                Console.WriteLine("6.Salir");
+                linea=Console.ReadLine();
+			          op=int.Parse(linea);
+                Console.Clear();
+
+                if (op == 1)
+                {
+                    Console.Clear();
+                    Contactos = PedirNoContactos();
+                    Console.Clear();
+                    agenda = new string[10, Contactos];
+                    GuardarContacto();
+                    GuardarContacto();
+                    GuardarContacto();
+                    Console.Clear();
+                }
+                if (op == 2)
+                {
+                    BuscarModificarEliminar('b');
+                }
+                if (op == 3)
+                {
+                    BuscarModificarEliminar('m');
+                }
+                if (op == 4)
+                {
+                    BuscarModificarEliminar('e');
+                }
+                if (op == 5)
+                {
+                    MostrarContactos();
+                }
+                if (op == 6)
+                {
+                     Console.Write("desea salir [s/n]: ");
+                     linea = Console.ReadLine();
+                     menu = char.Parse(linea);
+                }
+            }
+           
+        }
+        static int PedirNoContactos()
+        {
+            Console.Write("Cuantos contactos desea crear: ");
+            return int.Parse(Console.ReadLine());
+        }
+        static string PedirDatos(string linea)
+        {
+            string dato = "";
+            dato = "Ingrese " + linea + " : ";
+            return dato;
+        }
+        static void GuardarContacto()
+        {
+            if (Contador < Contactos)
+            {
+                Console.Write(PedirDatos("Nombre"));
+                agenda[0, Contador] = Console.ReadLine();
+
+                Console.Write(PedirDatos("Apellido"));
+                agenda[1, Contador] = Console.ReadLine();
+
+                Console.Write(PedirDatos("Direccion"));
+                agenda[2, Contador] = Console.ReadLine();
+
+                Console.Write(PedirDatos("Telefono"));
+                agenda[3, Contador] = Console.ReadLine();
+
+                Contador++;
+                Console.WriteLine("\n");
+            }
+            else
+            {
+                Console.WriteLine("Agenda llena\n");
+            }
+
+        }
+
+
+
+        static void MostrarContactos()
+        {
+            for (int f = 0; f < Contador; f++)
+            {
+                Console.WriteLine(agenda[0, f] + " " + agenda[1, f] + " " + agenda[2, f] + " " + agenda[3, f]);
+                
+                Console.Clear();
+            }
+        }
+        static void BuscarModificarEliminar(char tipo)
+        {
+            string buscar = "";
+            Console.Write("ingrese el nombre del contacto : ");
+            buscar = Console.ReadLine();
+
+            for (int f = 0; f < Contactos; f++)
+            {
+
+                if (tipo == 'b')
+                {
+                    if (buscar == agenda[0, f])
+                    {
+                        Console.WriteLine(agenda[0, f] + "\n" + agenda[1, f] + "\n" + agenda[2, f] + "\n" + agenda[3, f]);
+                    }
+                }
+                else if (tipo == 'm')
+                {
+                    if (buscar == agenda[0, f])
+                    {
+                        Console.Write(PedirDatos("Nombre"));
+                        agenda[0, f] = Console.ReadLine();
+
+                        Console.Write(PedirDatos("Apellido"));
+                        agenda[1, f] = Console.ReadLine();
+
+                        Console.Write(PedirDatos("Direccion"));
+                        agenda[2, f] = Console.ReadLine();
+
+                        Console.Write(PedirDatos("Telefono"));
+                        agenda[3, f] = Console.ReadLine();
+                    }
+                }
+                else
+                {
+                    if (buscar == agenda[0, f])
+                    {
+                        agenda[0, f] = " ";
+                        agenda[1, f] = " ";
+                        agenda[2, f] = " ";
+                        agenda[3, f] = " ";
+                    }
+                }
+            }
+	}
+}
